@@ -10,6 +10,7 @@
   export default defineComponent({
   name: 'WorldleGame',
   // Your component options go here
+  
 });
 </script>
 

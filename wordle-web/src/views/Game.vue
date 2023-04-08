@@ -1,15 +1,25 @@
 <template>
-    <div id="input-container">
-        <div class ="input-wrapper">
-            <input type="text" id="input" v-model="text"/>
-            <button class="submit-button" @click="submitText">Submit</button>
-        </div>
+  <div class="flex flex-col h-screen max-w-md mx-auto justify-event">
+    <word-row v-for="(guess, i) in state.guessesk" :key="i" :value="guess" :solution="state.solution" :submitted="state.submitted"/>
+    <div class="input-wrapper">
+      <input type="text" id="input" v-model="text" />
+      <button class="submit-button" @click="submitText">Submit</button>
     </div>
+  </div>
 </template>
 
 <script setup lang="ts">
     import { ref } from 'vue'
     import WordleGame from '../components/WordleGame.vue'
+    import WordRow from '../components/WordRow.vue'
+import { reactive } from 'vue';
+
+    const state = reactive({
+        guesses: ["", "", "", "", "", ""],
+        solution: "hello",
+        currentGuessIndex: 0,
+        submitted: false,
+    });
 
     const text = ref('')
     const submitText = () => {
