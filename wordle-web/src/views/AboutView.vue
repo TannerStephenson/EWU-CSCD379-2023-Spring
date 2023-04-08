@@ -4,9 +4,11 @@
       <v-card-title> Check out this repo on github! </v-card-title>
       <v-card-actions>
         <v-spacer />
-        <v-btn text color="warning">
-          <RouterLink to="/">Home</RouterLink>
-        </v-btn>
+        <RouterLink :to="{ path: '/' }">
+          <v-btn text color="warning">
+            Home
+          </v-btn>
+        </RouterLink>
         <v-btn text color="primary">
           <a href="https://github.com/TannerStephenson/EWU-CSCD379-2023-Spring">Github</a>
         </v-btn>

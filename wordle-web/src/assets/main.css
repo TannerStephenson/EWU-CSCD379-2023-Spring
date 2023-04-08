@@ -15,12 +15,6 @@ a,
   transition: 0.4s;
 }
 
-.red {
-  text-decoration: none;
-  color: rgb(255, 0, 0);
-  transition:0.2s;
-}
-
 @media (hover: hover) {
   a:hover {
     background-color: hsla(0, 0%, 49%, 0.2);

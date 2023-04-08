@@ -10,22 +10,25 @@
       </v-card-text>
 
       <v-card-actions>
-        <v-spacer />
-        <v-btn text color="warning">
-          <RouterLink to="/">Home</RouterLink>
-        </v-btn>
+        <RouterLink :to="{ path: '/' }">
+          <v-btn text color="warning">
+            Home
+          </v-btn>
+        </RouterLink>
       </v-card-actions>
     </v-card>
   </div>
 </template>
 
 <script setup lang="ts">
-    import { ref } from 'vue'
-    import { reactive } from 'vue';
 </script>
 
 <style>
-
+.v-btn {
+  border: black solid 1px;
+  align-items: center;
+  cursor: pointer;
+}
 
 
 @media (min-width: 1024px) {

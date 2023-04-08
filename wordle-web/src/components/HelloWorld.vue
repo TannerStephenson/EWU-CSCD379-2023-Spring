@@ -30,9 +30,6 @@ h3 {
   text-align: center;
 }
 
-.v-btn {
-  color: rgb(138, 214, 138);
-}
 
 @media (min-width: 1024px) {
   .greetings h1,
