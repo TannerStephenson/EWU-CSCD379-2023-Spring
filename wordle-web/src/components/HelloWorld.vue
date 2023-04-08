@@ -8,7 +8,8 @@ defineProps<{
   <div class="greetings">
     <h1 class="green">{{ msg }}</h1>
     <h3>
-      Checking project status
+      This is a project created by
+      <br> Tanner Stephenson
     </h3>
   </div>
 </template>
@@ -27,6 +28,10 @@ h3 {
 .greetings h1,
 .greetings h3 {
   text-align: center;
+}
+
+.v-btn {
+  color: rgb(138, 214, 138);
 }
 
 @media (min-width: 1024px) {

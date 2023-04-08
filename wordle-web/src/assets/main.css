@@ -11,8 +11,14 @@
 a,
 .green {
   text-decoration: none;
-  color: rgb(132, 255, 142);
+  color: rgb(17, 233, 100);
   transition: 0.4s;
+}
+
+.red {
+  text-decoration: none;
+  color: rgb(255, 0, 0);
+  transition:0.2s;
 }
 
 @media (hover: hover) {

@@ -1,18 +1,15 @@
 <template>
   <div class="about">
     <v-card>
-      <v-card-title> Hello! </v-card-title>
-      <v-card-subtitle> (College Class) </v-card-subtitle>
-
-      <v-card-text>
-        Lorem ipsum dolor sit amet blah blah blah
-        <v-icon icon="mdi:mdi-abacus" />
-      </v-card-text>
-
+      <v-card-title> Check out this repo on github! </v-card-title>
       <v-card-actions>
         <v-spacer />
-        <v-btn text color="warning">Cancel</v-btn>
-        <v-btn text color="primary">OK</v-btn>
+        <v-btn text color="warning">
+          <RouterLink to="/">Home</RouterLink>
+        </v-btn>
+        <v-btn text color="primary">
+          <a href="https://github.com/TannerStephenson/EWU-CSCD379-2023-Spring">Github</a>
+        </v-btn>
       </v-card-actions>
     </v-card>
   </div>

@@ -1,12 +1,12 @@
 <template>
   <header>
     <div class="wrapper">
-      <HelloWorld msg="Home" />
+      <HelloWorld msg="Welcome!" />
 
-      <nav>
+      <nav class>
         <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/game">Wordle</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/game">Game</RouterLink>
+        <RouterLink to="/about">Github repo</RouterLink>
       </nav>
     </div>
   </header>
@@ -49,10 +49,15 @@ nav a {
   display: inline-block;
   padding: 0 1rem;
   border-left: 1px solid var(--color-border);
+  color: rgb(138, 214, 138);
 }
 
 nav a:first-of-type {
   border: 0;
+}
+
+.v-btn {
+  color: red;
 }
 
 @media (min-width: 1024px) {
