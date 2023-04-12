@@ -1,9 +1,9 @@
 <template>
-  <div class="game">
-    <h1>Wordle Mind Bender</h1>
-    <v-text-field v-model="guess" label="Guess" variant="outlined" />
-    <v-btn @click="checkGuess">Guess</v-btn>
-    <div>
+  <h1>Wordle Mind Bender</h1>
+  <v-text-field v-model="guess" label="Guess" variant="solo"></v-text-field>
+
+  <v-btn @click="checkGuess">Check</v-btn>
+  <div>
     <v-row v-for="word in guesses">
       <v-col v-for="letter in word" :key="letter.letter">
         <v-card :color="letter.color">
@@ -12,9 +12,9 @@
       </v-col>
     </v-row>
   </div>
-    <h3>{{ secretWord }}</h3>
 
-  </div>
+  <h2>{{ guess }}</h2>
+  <h3>{{ secretWord }}</h3>
 </template>
 
 <script setup lang="ts">
@@ -77,10 +77,5 @@ function checkGuess() {
   console.log(results);
   console.log(isCorrect);
   console.log(guesses);
-  
-
 }
-
-
-
 </script>
