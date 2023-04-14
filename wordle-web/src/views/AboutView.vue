@@ -1,20 +1,16 @@
 <template>
-  <div class="about">
-    <v-card>
-      <v-card-title> Check out this repo on github! </v-card-title>
-      <v-card-actions>
-        <v-spacer />
-        <RouterLink :to="{ path: '/' }">
-          <v-btn text color="warning">
-            Home
-          </v-btn>
-        </RouterLink>
-        <v-btn text color="primary">
-          <a href="https://github.com/TannerStephenson/EWU-CSCD379-2023-Spring">Github</a>
-        </v-btn>
-      </v-card-actions>
+  <v-sheet color ="blue" height = "200px" class="pt-10 my-5">
+    <v-card class = "ma-10" elevation="5">
+      <v-card-title>Hello World</v-card-title>
     </v-card>
-  </div>
+  </v-sheet>
+    <v-row no-gutters>
+      <v-col v-for="i in 10" :key="i" cols="12" sm="4">
+          <v-card>
+            <v-card-title> {{ i }} </v-card-title>
+          </v-card>
+      </v-col>
+    </v-row>
 </template>
 
 <style>
