@@ -1,16 +1,9 @@
 <template>
-  <v-sheet color ="blue" height = "200px" class="pt-10 my-5">
-    <v-card class = "ma-10" elevation="5">
-      <v-card-title>Hello World</v-card-title>
+  <div class="about">
+    <v-card>
+      <v-card-title> About me </v-card-title>
     </v-card>
-  </v-sheet>
-    <v-row no-gutters>
-      <v-col v-for="i in 10" :key="i" cols="12" sm="4">
-          <v-card>
-            <v-card-title> {{ i }} </v-card-title>
-          </v-card>
-      </v-col>
-    </v-row>
+  </div>
 </template>
 
 <style>
