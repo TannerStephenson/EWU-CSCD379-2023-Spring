@@ -20,6 +20,7 @@
 <script setup lang="ts">
 import { WordleGame } from '@/scripts/wordleGame'
 import { ref, reactive } from 'vue'
+import { WordsService } from '@/scripts/wordsService';
 const guess = ref('')
 const game = reactive(new WordleGame())
 console.log(game.secretWord)

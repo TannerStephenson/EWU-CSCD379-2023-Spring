@@ -8,8 +8,8 @@ export abstract class WordsService {
   }
 
   static validWords(guess : string): string[] {
-    const candWords: string[] = [];
-    if (!guess) return candWords;
+    const possibleWords: string[] = [];
+    if (!guess) return possibleWords;
   
     guess = guess.padEnd(5, '.').replace(/\?/g, '.');
   
@@ -24,13 +24,13 @@ export abstract class WordsService {
   
     for (let i = 0; i < WordsService.#words.length; i++) {
       if (WordsService.#words[i].startsWith(guess)) {
-        candWords.push(WordsService.#words[i]);
+        possibleWords.push(WordsService.#words[i]);
       }
-      if (candWords.length > 0 && WordsService.#words[i][charPosition] !== firstNonQChar) {
+      if (possibleWords.length > 0 && WordsService.#words[i][charPosition] !== firstNonQChar) {
         break;
       }
     }
-    return candWords;
+    return possibleWords;
   }
 
   // From: https://github.com/kashapov/react-testing-projects/blob/master/random-word-server/five-letter-words.json
