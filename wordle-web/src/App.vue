@@ -8,6 +8,7 @@
         <RouterLink to="/game">Wordle</RouterLink>
         <RouterLink to="/github">Github repo</RouterLink>
         <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/practice">Practice</RouterLink>
       </nav>
     </div>
   </header>
