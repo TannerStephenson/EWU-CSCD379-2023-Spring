@@ -7,29 +7,30 @@ export abstract class WordsService {
     return this.#words.includes(word)
   }
 
-  static validWords(guess : string): string[] {
+  static validWords(guess: string): string[] {
     const possibleWords: string[] = [];
     if (!guess) return possibleWords;
   
+    //This lets us match words that are shorter than the guess
     guess = guess.padEnd(5, '.').replace(/\?/g, '.');
   
-    let charPosition = -1;
     for (let i = 0; i < guess.length; i++) {
-      if (guess[i] !== '?') {
-        charPosition = i;
-        break;
+      const currentChar = guess.charAt(i);
+      const newPossibleWords: string[] = [];
+      for (let j = 0; j < WordsService.#words.length; j++) {
+        const currentWord = WordsService.#words[j];
+        if (currentWord.length < i + 1) continue;
+        if (currentChar !== '.' && currentWord.charAt(i) !== currentChar) continue;
+        if (possibleWords.length === 0 || possibleWords.includes(currentWord)) {
+          newPossibleWords.push(currentWord);
+        }
       }
+      possibleWords.splice(0);
+      possibleWords.push(...newPossibleWords);
+      if (possibleWords.length === 0) break;
     }
-    const firstNonQChar = guess.charAt(charPosition);
-  
-    for (let i = 0; i < WordsService.#words.length; i++) {
-      if (WordsService.#words[i].startsWith(guess)) {
-        possibleWords.push(WordsService.#words[i]);
-      }
-      if (possibleWords.length > 0 && WordsService.#words[i][charPosition] !== firstNonQChar) {
-        break;
-      }
-    }
+    
+    //Returning the array of possible words
     return possibleWords;
   }
 
