@@ -21,10 +21,20 @@
 import { WordleGame } from '@/scripts/wordleGame'
 import { ref, reactive } from 'vue'
 import { WordsService } from '@/scripts/wordsService';
+
 const guess = ref('')
 const game = reactive(new WordleGame())
 console.log(game.secretWord)
+
+
+
 function checkGuess() {
   game.submitGuess(guess.value)
 }
 </script>
+
+<style scoped>
+v-btn{
+  margin: 0.5rem;
+}
+</style>

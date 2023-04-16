@@ -8,7 +8,8 @@
 </script>
 
 <style scoped>
-.home-page p {
+.home-page {
+  display: flex;
   font-size: 1.2rem;
   text-align: center;
 }
