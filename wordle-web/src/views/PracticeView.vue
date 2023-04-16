@@ -5,21 +5,23 @@
     </v-card>
   </v-sheet>
 
+
   <v-row no-gutters>
-    <v-col v-for="i in 10" :key="i" cols="12" sm="6" md="4" lg="3">
+    <v-col v-for="i in 25" :key="i" cols="5" sm="2" md="2" lg="2">
       <v-card class="ma-1">
         <v-card-title> {{ i }} </v-card-title>
       </v-card>
     </v-col>
   </v-row>
+
 </template>
 
-<style>
+<style scoped>
+v-col {
+  padding: 0.5rem;
+  color: #000;
+}
+  
 @media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
 }
 </style>

@@ -1,6 +1,8 @@
 <template>
   <main class="home-page">
-    <p>Welcome to the home page!</p>
+    <v-card>
+      hello
+    </v-card>
   </main>
 </template>
 
@@ -9,8 +11,13 @@
 
 <style scoped>
 .home-page {
-  display: flex;
+  
   font-size: 1.2rem;
   text-align: center;
+}
+v-card {
+  margin: 0 auto;
+  width: 50%;
+  padding: 1rem;
 }
 </style>
