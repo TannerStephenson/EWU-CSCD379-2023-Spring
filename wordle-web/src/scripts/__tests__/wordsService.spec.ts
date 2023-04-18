@@ -17,7 +17,7 @@ describe('WordsService', () => {
 
   it('should correctly return valid words for a given guess', () => {
     expect(WordsService.validWords('aahe?')).toEqual(['aahed'])
-    expect(WordsService.validWords('abac')).toEqual(['abaca','abaci','aback','abacs'])
+    expect(WordsService.validWords('abac')).toEqual(['abaca', 'abaci', 'aback', 'abacs'])
     expect(WordsService.validWords('aaaa')).toEqual([])
   })
 })

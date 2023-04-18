@@ -3,7 +3,8 @@
     <h1 class="green">{{ msg }}</h1>
     <h3>
       This is a project created by
-      <br> Tanner Stephenson
+      <br />
+      Tanner Stephenson
     </h3>
   </div>
 </template>
@@ -36,9 +37,8 @@ h3 {
   padding: auto;
 }
 
-
 @media (min-width: 1024px) {
-  .greetings h1{
+  .greetings h1 {
     padding: auto;
   }
   .greetings h3 {

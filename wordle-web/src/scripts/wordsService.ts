@@ -8,30 +8,30 @@ export abstract class WordsService {
   }
 
   static validWords(guess: string): string[] {
-    const possibleWords: string[] = [];
-    if (!guess) return possibleWords;
-  
+    const possibleWords: string[] = []
+    if (!guess) return possibleWords
+
     //This lets us match words that are shorter than the guess
-    guess = guess.padEnd(5, '.').replace(/\?/g, '.');
-  
+    guess = guess.padEnd(5, '.').replace(/\?/g, '.')
+
     for (let i = 0; i < guess.length; i++) {
-      const currentChar = guess.charAt(i);
-      const newPossibleWords: string[] = [];
+      const currentChar = guess.charAt(i)
+      const newPossibleWords: string[] = []
       for (let j = 0; j < WordsService.#words.length; j++) {
-        const currentWord = WordsService.#words[j];
-        if (currentWord.length < i + 1) continue;
-        if (currentChar !== '.' && currentWord.charAt(i) !== currentChar) continue;
+        const currentWord = WordsService.#words[j]
+        if (currentWord.length < i + 1) continue
+        if (currentChar !== '.' && currentWord.charAt(i) !== currentChar) continue
         if (possibleWords.length === 0 || possibleWords.includes(currentWord)) {
-          newPossibleWords.push(currentWord);
+          newPossibleWords.push(currentWord)
         }
       }
-      possibleWords.splice(0);
-      possibleWords.push(...newPossibleWords);
-      if (possibleWords.length === 0) break;
+      possibleWords.splice(0)
+      possibleWords.push(...newPossibleWords)
+      if (possibleWords.length === 0) break
     }
-    
+
     //Returning the array of possible words
-    return possibleWords;
+    return possibleWords
   }
 
   // From: https://github.com/kashapov/react-testing-projects/blob/master/random-word-server/five-letter-words.json

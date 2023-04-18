@@ -1,13 +1,10 @@
 <template>
   <main class="home-page">
-    <v-card>
-      hello
-    </v-card>
+    <v-card> hello </v-card>
   </main>
 </template>
 
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
 
 <style scoped>
 .home-page {

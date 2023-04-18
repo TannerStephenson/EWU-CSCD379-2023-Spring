@@ -37,13 +37,11 @@ header {
   margin: 0 auto 2rem;
 }
 
-
 nav {
   width: 100%;
   font-size: 12px;
   text-align: center;
   margin-top: 2rem;
-  
 }
 
 nav a.router-link-exact-active {
@@ -86,7 +84,7 @@ nav a:first-of-type {
     place-items: flex-start;
     flex-wrap: wrap;
     width: 100%;
-    margin: auto
+    margin: auto;
   }
 
   nav {
@@ -97,6 +95,5 @@ nav a:first-of-type {
     padding: 1rem 0;
     margin-top: 1rem;
   }
-
 }
 </style>
