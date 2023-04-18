@@ -16,12 +16,15 @@
   </div>
 </template>
 
-<style>
+<style scoped>
 @media (min-width: 1024px) {
   .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
+    font-size: 1.2rem;
+    text-align: center;
+    margin: auto;
+    top: 50%;
+    left: 50%;
+    position: fixed;
   }
 }
 </style>

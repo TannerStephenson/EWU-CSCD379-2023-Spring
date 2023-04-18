@@ -4,11 +4,13 @@
       <HelloWorld msg="Welcome!" />
 
       <nav class>
+        <v-divider></v-divider>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/game">Wordle</RouterLink>
         <RouterLink to="/github">Github repo</RouterLink>
         <RouterLink to="/about">About</RouterLink>
         <RouterLink to="/practice">Practice</RouterLink>
+        <v-divider></v-divider>
       </nav>
     </div>
   </header>
@@ -95,5 +97,6 @@ nav a:first-of-type {
     padding: 1rem 0;
     margin-top: 1rem;
   }
+
 }
 </style>

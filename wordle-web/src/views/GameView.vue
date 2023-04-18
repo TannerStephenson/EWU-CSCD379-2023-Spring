@@ -34,6 +34,8 @@ function checkGuess() {
 </script>
 
 <style scoped>
+
+
 v-btn{
   margin: 0.5rem;
 }

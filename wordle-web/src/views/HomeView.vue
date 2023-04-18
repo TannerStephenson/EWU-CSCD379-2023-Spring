@@ -11,13 +11,11 @@
 
 <style scoped>
 .home-page {
-  
   font-size: 1.2rem;
   text-align: center;
-}
-v-card {
-  margin: 0 auto;
-  width: 50%;
-  padding: 1rem;
+  margin: auto;
+  top: 50%;
+  left: 50%;
+  position: fixed;
 }
 </style>
