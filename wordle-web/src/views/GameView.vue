@@ -1,8 +1,17 @@
 <template>
+  <div class="game">
   <h1>Wordle Mind Bender</h1>
   <v-text-field v-model="guess" label="Guess" variant="solo"></v-text-field>
 
   <v-btn @click="checkGuess">Check</v-btn>
+  <v-card>
+    Possible words
+    <v-select
+    label="Select"
+    :items= "WordsService.validWords(guess)">
+    </v-select>
+
+  </v-card>
   <div>
     <v-row v-for="word in game.guesses" :key="word.text">
       <v-col v-for="letter in word.letters" :key="letter.char">
@@ -15,6 +24,7 @@
 
   <h2>{{ guess }}</h2>
   <h3>{{ game.secretWord }}</h3>
+</div>
 </template>
 
 <script setup lang="ts">
