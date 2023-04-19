@@ -9,14 +9,35 @@ export class Word {
         this.letters.push(new Letter(letter))
       }
     }
+    else {
+    //add empty letters to array
+      for (let i = this.letters.length; i < 6; i++) {
+        this.letters.push(new Letter())
+      }
+    }
   }
 
   get text() {
     return this.letters.map((l) => l.char).join('')
   }
 
-  push(letter: Letter) {
-    this.letters.push(letter)
+  push(char: string) {
+    for (const letter of this.letters) {
+      if (letter.char === '') {
+        letter.char = char
+        break
+      }
+    }
+  }
+
+  pop() {
+    for (let i = this.letters.length - 1; i >= 0; i--) {
+      if (this.letters[i].char !== '') {
+        this.letters[i].char = ''
+        return
+      }
+    }
+    
   }
 
   check(secretWord: string): boolean {
