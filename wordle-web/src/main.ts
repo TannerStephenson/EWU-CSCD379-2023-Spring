@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
+import { mdi } from 'vuetify/iconsets/mdi'
 
 import './assets/main.css'
 
@@ -16,7 +17,7 @@ const vuetify = createVuetify({
   icons: {
     defaultSet: 'mdi',
     sets: {
-      
+      mdi
     }
   },
   theme: {

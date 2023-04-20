@@ -1,49 +1,36 @@
-import { Letter, LetterStatus } from '@/scripts/letter'
-import { ref, reactive } from 'vue'
-import { Word } from './word'
+import { Word } from '@/scripts/word'
 import { WordsService } from './wordsService'
 
-export enum WordleGameState {
-  Active = 0,
-  Won = 1,
-  Lost = 2
-}
-
 export class WordleGame {
-  constructor(secretWord?: string) {
-    this.resetGame(secretWord)
+  constructor(secretWord?: string, numberOfGuesses: number = 6) {
+    if (!secretWord) secretWord = WordsService.getRandomWord()
+    this.numberOfGuesses = numberOfGuesses
+    this.restartGame(secretWord)
   }
-
-  
-
-  currentGuessIndex = 0
   guesses = new Array<Word>()
   secretWord = ''
-  status = WordleGameState.Active
+  numberOfGuesses = 6
+  guess!: Word
 
-  resetGame(secretWord?: string | null, numberOfGuesses: number = 5) {
+  restartGame(secretWord: string) {
     this.secretWord = secretWord || WordsService.getRandomWord()
     this.guesses.splice(0)
-
-
-    for (let i = 0; i < numberOfGuesses; i++) {
-      const word = new Word()
+    // create a word for each guess
+    for (let iWord = 0; iWord < this.numberOfGuesses; iWord++) {
+      const word = new Word(secretWord.length)
       this.guesses.push(word)
     }
-    this.currentGuessIndex = 0
-  }
-
-  get currentGuess() {
-    return this.guesses[this.currentGuessIndex]
+    this.guess = this.guesses[0]
   }
 
   submitGuess() {
-    if (this.currentGuess.check(this.secretWord)) {
-      this.status = WordleGameState.Won
+    // put logic to win here.
+    this.guess.check(this.secretWord)
+    const index = this.guesses.indexOf(this.guess)
+    if (index < this.guesses.length - 1) {
+      this.guess = this.guesses[index + 1]
+    } else {
+      // The game is over
     }
-     else if (this.currentGuessIndex === this.guesses.length - 1) {
-      this.status = WordleGameState.Lost
-    }
-    this.currentGuessIndex++
   }
 }

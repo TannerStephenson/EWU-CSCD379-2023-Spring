@@ -3,16 +3,18 @@ import { Letter, LetterStatus } from './letter'
 export class Word {
   public letters = Array<Letter>()
 
-  constructor(word?: string | null) {
+  constructor(word?: string | null | number) {
     if (word) {
-      for (const letter of word) {
-        this.letters.push(new Letter(letter))
-      }
-    }
-    else {
-    //add empty letters to array
-      for (let i = this.letters.length; i < 5; i++) {
-        this.letters.push(new Letter())
+      if (typeof word == 'number') {
+        // Add one letter for each number. With blank spots
+        for (let i = 0; i < word; i++) {
+          this.letters.push(new Letter(''))
+        }
+      } else {
+        // add word letters to array
+        for (const letter of word) {
+          this.letters.push(new Letter(letter))
+        }
       }
     }
   }
@@ -22,14 +24,16 @@ export class Word {
   }
 
   push(char: string) {
+    // Find the first empty letter and replace it
     for (const letter of this.letters) {
       if (letter.char === '') {
         letter.char = char
-        break
+        return
       }
     }
   }
 
+  // Remove the last letter
   pop() {
     for (let i = this.letters.length - 1; i >= 0; i--) {
       if (this.letters[i].char !== '') {
@@ -37,17 +41,15 @@ export class Word {
         return
       }
     }
-    
   }
 
   check(secretWord: string): boolean {
     console.log(this.text)
-
     // check if the letters are valid
+    //const results = new Word()
     const guessChars = this.letters.map((l) => l.char)
     const secretChars = secretWord.split('')
     let isCorrect = true
-
     for (let i = 0; i < 5; i++) {
       if (this.letters[i].char === secretWord[i]) {
         this.letters[i].status = LetterStatus.Correct
@@ -60,6 +62,7 @@ export class Word {
         console.log(`Letter ${i} is incorrect`)
       }
     }
+
     for (let i = 0; i < 5; i++) {
       if (guessChars[i] !== '_') {
         for (let j = 0; j < 5; j++) {
@@ -73,6 +76,11 @@ export class Word {
         }
       }
     }
+
+    console.log(guessChars)
+    console.log(secretChars)
+    console.log(isCorrect)
     return isCorrect
+    // check if the letters are in the right place
   }
 }

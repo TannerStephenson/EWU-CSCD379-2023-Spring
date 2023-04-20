@@ -1,19 +1,22 @@
 <template>
-        <v-row class="justify-center" dense v-for="(word, r) in game.guesses" :key="r">
-          <v-col cols="auto" v-for="(letter, c) in word.letters" :key="`${r}-${c}`">
-            <LetterButton :letter="letter"></LetterButton>
-          </v-col>
-        </v-row>
+  <v-row class="justify-center" dense v-for="(word, r) in game.guesses" :key="r">
+    <v-col cols="auto" v-for="(letter, c) in word.letters" :key="`${r}-${c}`">
+      <LetterButton :letter="letter" @click="letterClick(letter)" />
+    </v-col>
+  </v-row>
 </template>
 
-<script lang = "ts">
-import { WordleGame } from '@/scripts/wordleGame.vue';
-import { defineProps } from 'vue';
+<script setup lang="ts">
 import LetterButton from '@/components/LetterButton.vue'
-import { reactive } from 'vue'
-
-
+import type { Letter } from '@/scripts/letter'
+import type { WordleGame } from '@/scripts/wordleGame'
 defineProps<{
-    game: wordleGame 
+  game: WordleGame
 }>()
+const emits = defineEmits<{
+  (event: 'letterClick', value: Letter): void
+}>()
+function letterClick(letter: Letter) {
+  emits('letterClick', letter)
+}
 </script>
