@@ -1,9 +1,9 @@
 <template>
   <header>
     <div class="wrapper">
-      <HelloWorld msg="Welcome!" />
 
       <nav class>
+        
         <v-divider></v-divider>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/game">Wordle</RouterLink>
@@ -12,15 +12,29 @@
         <RouterLink to="/practice">Practice</RouterLink>
         <v-divider></v-divider>
       </nav>
+      <v-btn @click = "setInverseTheme">Inverse</v-btn>
+      <v-btn @click="setDarkTheme"> Dark Theme </v-btn>
     </div>
   </header>
 
   <RouterView />
+  
 </template>
 
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
+import HamburgerMenu from './components/HamburgerMenu.vue'
+import { useTheme } from 'vuetify/lib/framework.mjs'
+
+const theme = useTheme()
+
+function setInverseTheme() {
+  theme.global.name.value = 'inverse';
+}
+function setDarkTheme() {
+  theme.global.name.value = 'dark'
+}
 </script>
 
 <style>

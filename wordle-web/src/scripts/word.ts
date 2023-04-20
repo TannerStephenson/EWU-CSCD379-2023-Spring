@@ -11,7 +11,7 @@ export class Word {
     }
     else {
     //add empty letters to array
-      for (let i = this.letters.length; i < 6; i++) {
+      for (let i = this.letters.length; i < 5; i++) {
         this.letters.push(new Letter())
       }
     }

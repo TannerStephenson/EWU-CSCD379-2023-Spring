@@ -12,8 +12,34 @@ import * as directives from 'vuetify/directives'
 
 const vuetify = createVuetify({
   components,
-  directives
+  directives,
+  icons: {
+    defaultSet: 'mdi',
+    sets: {
+      
+    }
+  },
+  theme: {
+    defaultTheme: "dark",
+    themes: {
+      dark: {
+        colors: {
+          correct: '#4CAF50',
+          misplaced: '#FFC107',
+          wrong: '#F44336'
+        }
+      },
+      inverse: {
+        colors: {
+          correct: '#F44336',
+          misplaced: '#FFC107',
+          wrong: '#4CAF50'
+        }
+      }
+    }
+  }
 })
+
 
 const app = createApp(App)
 

@@ -21,7 +21,7 @@ export class WordleGame {
   secretWord = ''
   status = WordleGameState.Active
 
-  resetGame(secretWord?: string | null, numberOfGuesses: number = 6) {
+  resetGame(secretWord?: string | null, numberOfGuesses: number = 5) {
     this.secretWord = secretWord || WordsService.getRandomWord()
     this.guesses.splice(0)
 
