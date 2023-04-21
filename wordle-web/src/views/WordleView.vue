@@ -4,7 +4,7 @@
   <GameBoard :game="game" @letterClick="addChar" />
   <KeyBoard @letterClick="addChar" />
 
-  <v-btn @click="checkGuess" @keyup.enter="checkGuess"> Check </v-btn>
+  <v-btn @click="checkGuess" @keyup.enter="checkGuess"> Submit </v-btn>
 
   <h2>{{ guess }}</h2>
   <h3>{{ game.secretWord }}</h3>
