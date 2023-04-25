@@ -1,45 +1,55 @@
 <template>
-    <v-row class="justify-center" dense v-for="(key, i) in keyboardLetters" :key="i">
-      <v-col v-for="(char, j) in key" :key="j">
-        <LetterButton :letter="new Letter(char)" @click="letterClick(new Letter(char))" />
-      </v-col>
-    </v-row>
+  <v-row class="justify-center" dense v-for="(key, i) in keyboardLetters" :key="i">
+    <v-col cols="auto" v-for="(letter, j) in key" :key="j">
+      <v-hover v-slot="{ isHovering, props }">
+        <LetterButton
+          :letter="letter"
+          @click="letterClick(letter)"
+          v-bind="props"
+          :elevation="isHovering ? 15 : 6"
+        />
+      </v-hover>
+    </v-col>
+  </v-row>
 </template>
-  
+
 <script setup lang="ts">
 import LetterButton from '@/components/LetterButton.vue'
 import { Letter } from '@/scripts/letter'
 import { computed } from 'vue'
 
 const props = defineProps<{
-    guessedLetters: Letter[]
+  guessedLetters: Letter[]
 }>()
 
-const keyboardLetters = computed(() =>{
-    const keyboardLetters: Letter[][] =[];
-    const keyboardKeys = [
-     ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
-     ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'],
-     ['z', 'x', 'c', 'v', 'b', 'n', 'm']
-   ]
+const keyboardLetters = computed(() => {
+  console.log(props.guessedLetters.length)
+  const keyboardLetters: Letter[][] = []
 
-   for(let keyboardKey of keyboardKeys){
-       let keyboardRow: Letter[] = [];
-       for(let key of keyboardKey){
-           keyboardRow.push(props.guessedLetters.find((l) => l.char == key) ?? new Letter(key))
-       }
-       keyboardLetters.push(keyboardRow)
-   }
+  const keyboardKeys = [
+    ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
+    ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'],
+    ['z', 'x', 'c', 'v', 'b', 'n', 'm']
+  ]
 
-   return keyboardLetters
+  for (let keyboardKey of keyboardKeys) {
+    let keyboardRow: Letter[] = []
+
+    for (let key of keyboardKey) {
+      keyboardRow.push(props.guessedLetters.find((l) => l.char === key) ?? new Letter(key))
+    }
+
+    keyboardLetters.push(keyboardRow)
+  }
+
+  return keyboardLetters
 })
 
-   
-  const emits = defineEmits<{
-    (event: 'letterClick', value: Letter): void
-  }>()
-  function letterClick(letter: Letter) {
-    emits('letterClick', letter)
-  }
-  </script>
-  
+const emits = defineEmits<{
+  (event: 'letterClick', value: Letter): void
+}>()
+
+function letterClick(letter: Letter) {
+  emits('letterClick', letter)
+}
+</script>

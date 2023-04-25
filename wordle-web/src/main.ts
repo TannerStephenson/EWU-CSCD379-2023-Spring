@@ -4,8 +4,9 @@ import router from './router'
 import { mdi } from 'vuetify/iconsets/mdi'
 
 import './assets/main.css'
+import '@mdi/font/css/materialdesignicons.css'
 
-//vuetify
+// Vuetify
 import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
@@ -21,7 +22,7 @@ const vuetify = createVuetify({
     }
   },
   theme: {
-    defaultTheme: "dark",
+    defaultTheme: 'dark',
     themes: {
       dark: {
         colors: {
@@ -36,15 +37,29 @@ const vuetify = createVuetify({
           misplaced: '#FFC107',
           wrong: '#4CAF50'
         }
+      },
+      neon: {
+        colors: {
+          correct: '#00FFFF',
+          misplaced: '#FFFF00',
+          wrong: '#FF00FF'
+        }
+      },
+      pastel: {
+        colors: {
+          correct: '#D2FFF3',
+          misplaced: '#FFF3D2',
+          wrong: '#F3D2FF'
+        }
       }
     }
   }
 })
 
-
 const app = createApp(App)
 
 app.use(vuetify)
+
 app.use(router)
 
 app.mount('#app')

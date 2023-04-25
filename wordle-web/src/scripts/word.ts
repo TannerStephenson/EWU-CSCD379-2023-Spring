@@ -3,7 +3,7 @@ import { Letter, LetterStatus } from './letter'
 export class Word {
   public letters = Array<Letter>()
 
-  constructor(word?: string | null | number) {
+  constructor(word?: string | null, numberOfLetters: number = 5) {
     if (word) {
       if (typeof word == 'number') {
         // Add one letter for each number. With blank spots
@@ -16,11 +16,27 @@ export class Word {
           this.letters.push(new Letter(letter))
         }
       }
+    } else {
+      // add empty letters to array
+      for (let i = this.letters.length; i < numberOfLetters; i++) {
+        this.letters.push(new Letter())
+      }
     }
   }
 
   get text() {
     return this.letters.map((l) => l.char).join('')
+  }
+
+  clear() {
+    let newLetters: Array<Letter> = [
+      new Letter(''),
+      new Letter(''),
+      new Letter(''),
+      new Letter(''),
+      new Letter('')
+    ]
+    this.letters = newLetters
   }
 
   push(char: string) {
