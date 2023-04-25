@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     paths: 
-      - wordle-web/**
+      - Wordle.Api/**
   pull_request:
     types: [opened, synchronize, reopened]
 
