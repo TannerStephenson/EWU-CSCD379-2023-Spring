@@ -145,36 +145,52 @@
 
 ## Week 7
 ### Lecture 13. 5/16: 
+- Classes in C#/Java and TS/JS
 - Redirecting root on API to the Wordle site
-- Word of the day controller
-- Service mocks in .NET
+- Word of the day controller and tests
+- Handling multi-threading issues with creating the word of the day.
+
+### Lecture 14. 5/18:
+- Unique indexes
+- Reusing a view for multiple routes
 - Parsing query parameters to determine game type
+- Get method query parameters on API endpoints
 - Load Word of the day in App
 - Integration testing
 
-### Lecture 14. 5/18:
-- Responsive Design Patterns
-- IsOnline flag
-- Client unit testing
-- Mocking API calls on the client
-
 ## Week 8
 ### Lecture 15. 5/23: 
+- EF multiple table queries (Getting Word of the Day stats)
+- Using GroupBy, Sort
+- Questions from the homework
+- Lots of other stuff pertaining to homework
+
+### Lecture 16, 5/25
+- Database rollback and Migration consolidate
+- Full page images with themes
+- CSS deep dive
+- Navigation when query changes
+- v-model
+- CSS animations using transition
+- Creating revealing letters
 - The problem of security and how to handle it
+- ASP.NET Identity Intro
+
+### Next Topics
 - Identity in a web project (not just API)
 - Scaffolding EF
 - Adding Identity to the API
 - Scaffolding EF
 - Cookies
 - JWTs, validation, claims (UserId, Name)
-
-### Lecture 16. 5/25: 
 - Create login component
 - Managing state around logins, existing GUID, etc.
 - Managing auth flow and various login cases
 - Remembering login
 - Refreshing the token
 - Authorizing specific API calls
+- API testing with service mocks and interfaces
+- Graceful error handling when API is missing
 
 ## Week 9
 ### Lecture 17. 5/30: 

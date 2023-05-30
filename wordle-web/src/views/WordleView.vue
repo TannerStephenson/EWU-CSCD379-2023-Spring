@@ -1,50 +1,9 @@
 <template>
-  <v-overlay :model-value="overlay" class="align-center justify-center" persistent>
-    <v-progress-circular color="primary" indeterminate size="64" />
-  </v-overlay>
-
-  <div class="text-h4 text-center">Wordle Mind Bender</div>
-
-  <GameBoard :game="game" @letterClick="addChar" />
-
-  <GameKeyboard :guessedLetters="game.guessedLetters" @letterClick="addChar" />
-
-  <v-row class="justify-center">
-    <v-btn
-      @click="checkGuess"
-      @keyup.enter="checkGuess"
-      color="primary"
-      :size="display.xs ? 'small' : display.sm ? undefined : 'large'"
-      v-if="game.status == WordleGameStatus.Active"
-    >
-      Check
-    </v-btn>
-    <v-btn
-      @click="newGame"
-      @keyup.enter="checkGuess"
-      color="secondary"
-      :size="display.xs ? 'small' : display.sm ? undefined : 'large'"
-      v-if="game.status !== WordleGameStatus.Active"
-    >
-      New Game
-    </v-btn>
-  </v-row>
-
-  <div class="text-h4 text-center mt-10" v-if="game.status == WordleGameStatus.Lost">
-    Better Luck Next Time
-  </div>
-  <div class="text-h4 text-center mt-10" v-if="game.status == WordleGameStatus.Won">You Won!</div>
-
-  <v-row class="justify-center" v-if="game.status == WordleGameStatus.Active">
-    <v-col xs="11" sm="9" md="6" lg="4">
-      <WordleSolver :game="game" @wordClick="(value: string) => checkGuess(value)"></WordleSolver>
-    </v-col>
-  </v-row>
-
-  <ScoreDialog v-model="showScoreDialog" :game-result="lastGameResult" />
+  <WordleGame :isWordOfTheDay="false"></WordleGame>
 </template>
 
 <script setup lang="ts">
+<<<<<<< HEAD
 import { WordleGame, WordleGameStatus } from '@/scripts/wordleGame'
 import { ref, reactive, onMounted, onUnmounted, inject, type Ref } from 'vue'
 import type { Letter } from '@/scripts/letter'
@@ -179,4 +138,7 @@ function sendGameResult() {
   //   this.onGameEnd(response.data as GameResult)
   // }
 }
+=======
+import WordleGame from '@/components/WordleGame.vue'
+>>>>>>> Assignment-5
 </script>
