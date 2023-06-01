@@ -5,8 +5,8 @@
       <template v-slot>
         <v-app-bar-title>
           <RouterLink to="/">
-            <v-icon icon="mdi-alpha-w-box" color="orange-darken-3"></v-icon>
-            Wordle
+            <v-icon icon="mdi-cards" color="orange-darken-3"></v-icon>
+            BlackJack
           </RouterLink>
         </v-app-bar-title>
         <v-spacer></v-spacer>
