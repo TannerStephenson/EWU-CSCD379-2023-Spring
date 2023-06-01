@@ -1,10 +1,9 @@
-﻿namespace Wordle.Api.Data
+﻿namespace Wordle.Api.Dtos
 {
-    public class Card
+    public class CardDto
     {
         public int Id { get; set; }
         public string? Suit { get; set; }
         public int CardValue { get; set; }
     }
 }
-

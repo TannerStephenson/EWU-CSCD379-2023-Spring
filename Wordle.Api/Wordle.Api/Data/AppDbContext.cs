@@ -12,18 +12,6 @@ namespace Wordle.Api.Data
         }
 
         public DbSet<Word> Words => Set<Word>();
-        public DbSet<Player> Players => Set<Player>();
-        public DbSet<DateWord> DateWords => Set<DateWord>();
-        public DbSet<PlayerGame> PlayerGames => Set<PlayerGame>();
         public DbSet<Card> Cards => Set<Card>();
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-
-            modelBuilder
-                .Entity<DateWord>()
-                .HasIndex(f => f.Date)
-                .IsUnique();
-           
-        }
     }
 }
