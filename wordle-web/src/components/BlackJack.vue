@@ -62,7 +62,7 @@ import { defineProps } from 'vue';
 import type { Card } from '@/scripts/card';
 import { onMounted } from 'vue';
 
-const flipped = ref(false);
+const flipped = ref(true);
 const dealersFlipped = ref(false);
 const cardBackUrl = ref('https://opengameart.org/sites/default/files/card%20back%20black.png');
 const playerCards = ref<Card[]>([]);
@@ -79,7 +79,7 @@ onMounted(() => {
 
 function newGame() {
   // Reset the game
-  flipped.value = true;
+  flipped.value = false;
   playerCards.value = [];
   Axios.get('/api/Card')
     .then((response) => {
@@ -90,6 +90,9 @@ function newGame() {
     .catch((error) => {
       console.log(error);
     })
+    setTimeout(() => {
+      flipped.value = true;
+}, 1000);
 }
 
 
