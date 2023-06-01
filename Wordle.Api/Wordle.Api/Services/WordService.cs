@@ -118,7 +118,7 @@ public class WordService
         }
     }
 
-    public async Task<List<WordOfTheDayStatsDto>> GetWordOfTheDayStatsAsync(DateTime? date = null, int daysBack = 10, Guid? playerId = null)
+    /*public async Task<List<WordOfTheDayStatsDto>> GetWordOfTheDayStatsAsync(DateTime? date = null, int daysBack = 10, Guid? playerId = null)
     {
         if (daysBack < 1 || daysBack > 100) daysBack = 10;
         // Make sure we get the most recent day in the farthest timezone
@@ -174,5 +174,5 @@ public class WordService
             result = await GetWordOfTheDayStatsAsync(date, daysBack);
         }
         return result;
-    }
+    }*/
 }

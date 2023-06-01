@@ -15,7 +15,7 @@ namespace Wordle.Api.Migrations
     partial class Word
     {
         /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        /*protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,6 +44,6 @@ namespace Wordle.Api.Migrations
                     b.ToTable("Words");
                 });
 #pragma warning restore 612, 618
-        }
+        }*/
     }
 }
