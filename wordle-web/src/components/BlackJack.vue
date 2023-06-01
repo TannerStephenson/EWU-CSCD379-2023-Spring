@@ -56,16 +56,19 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import Axios from 'axios';
+import { defineProps } from 'vue';
 import type { Card } from '@/scripts/card';
 
 const props = defineProps<{
-  cardValue: number
-  suit: string
+  CardValue: number
+  Suit: string
 }>()
+
 
 const flipped = ref(false);
 const cardBackUrl = ref('https://opengameart.org/sites/default/files/card%20back%20black.png');
-const playerCards = ref([]);
+const playerCards = ref<Card[]>([]);
 
 function flipCards() {
   flipped.value = !flipped.value;
@@ -73,7 +76,16 @@ function flipCards() {
 
 function hit() {
   // Add a new card to the player's hand
-  playerCards.value.push({});
+  Axios.get('/api/Card')
+    .then((response) => {
+      const newCard = response.data as Card; //as Card?
+      playerCards.value.push(newCard);
+      console.log(playerCards.value);
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+  //playerCards.value.push({});
 }
 
 function stay() {

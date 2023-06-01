@@ -17,9 +17,9 @@ public class CardService
 
     public async Task<Card> GetRandomCardAsync()
     {
-        var randomIndex = new Random().Next(1, 52);
-        /*var card = await _db.Cards.FirstAsync();*/
-        var card = await _db.Cards.Skip(randomIndex).FirstAsync();
+        var allCards = await _db.Cards.ToListAsync();
+        var randomIndex = new Random().Next(0, allCards.Count);
+        var card = allCards[randomIndex];
         return card;
     }
 
