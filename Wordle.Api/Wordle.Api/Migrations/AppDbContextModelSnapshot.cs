@@ -22,6 +22,25 @@ namespace Wordle.Api.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Wordle.Api.Data.Card", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CardValue")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Suit")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Cards");
+                });
+
             modelBuilder.Entity("Wordle.Api.Data.DateWord", b =>
                 {
                     b.Property<int>("DateWordId")

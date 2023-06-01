@@ -12,8 +12,8 @@ using Wordle.Api.Data;
 namespace Wordle.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230520151247_PlayerGame")]
-    partial class PlayerGame
+    [Migration("20230601015334_Card")]
+    partial class Card
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,25 @@ namespace Wordle.Api.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Wordle.Api.Data.Card", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CardValue")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Suit")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Cards");
+                });
 
             modelBuilder.Entity("Wordle.Api.Data.DateWord", b =>
                 {
@@ -141,7 +160,7 @@ namespace Wordle.Api.Migrations
                     b.HasOne("Wordle.Api.Data.Word", "Word")
                         .WithMany("DateWords")
                         .HasForeignKey("WordId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Word");

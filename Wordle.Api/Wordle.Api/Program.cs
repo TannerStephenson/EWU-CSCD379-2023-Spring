@@ -36,6 +36,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 });
 builder.Services.AddScoped<WordService>();
 builder.Services.AddScoped<PlayerService>();
+builder.Services.AddScoped<CardService>();
 
 // Actually build the app so we can configure the pipeline next
 var app = builder.Build();
@@ -48,7 +49,7 @@ using (var scope = app.Services.CreateScope())
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     db.Database.Migrate();
     Seeder.SeedWords(db);
-    Seeder.SeedPlayers(db);
+    Seeder.SeedCards(db);
 }
 
 // Configure the HTTP request pipeline.

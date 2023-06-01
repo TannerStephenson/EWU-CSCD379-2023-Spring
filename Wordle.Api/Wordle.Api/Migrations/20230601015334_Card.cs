@@ -5,23 +5,23 @@
 namespace Wordle.Api.Migrations
 {
     /// <inheritdoc />
-    public partial class Word : Migration
+    public partial class Card : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Words",
+                name: "Cards",
                 columns: table => new
                 {
-                    WordId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Text = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsCommon = table.Column<bool>(type: "bit", nullable: false)
+                    Suit = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CardValue = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Words", x => x.WordId);
+                    table.PrimaryKey("PK_Cards", x => x.Id);
                 });
         }
 
@@ -29,7 +29,7 @@ namespace Wordle.Api.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Words");
+                name: "Cards");
         }
     }
 }
