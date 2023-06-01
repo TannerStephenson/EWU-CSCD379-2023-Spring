@@ -4,7 +4,7 @@
     {
         public static void Seed(AppDbContext context)
         {
-            SeedPlayers(context);
+            SeedCards(context);
             SeedWords(context);
         }
  
@@ -27,18 +27,25 @@
             }
         }
 
-        [HttpGet]
-        public async Task<CardDto> Get()
+        public static void SeedCards(AppDbContext db)
         {
-            var randomCard = await _cardService.GetRandomCardAsync();
-            // Map the Card object to a CardDto object
-            var cardDto = new CardDto
+            if (!db.Cards.Any())
             {
-                Suit = randomCard.Suit,
-                CardValue = randomCard.CardValue
-            };
-            return cardDto;
+                var cardLines = System.IO.File.ReadAllLines("Content/Cards.csv");
+                foreach (var line in cardLines)
+                {
+                    var parts = line.Split(',');
+                    var card = new Card()
+                    {
+                        CardValue = int.Parse(parts[0]),
+                        Suit = parts[1]
+                    };
+                    db.Cards.Add(card);
+                }
+                db.SaveChanges();
+            }
         }
+        
 
     }
 }

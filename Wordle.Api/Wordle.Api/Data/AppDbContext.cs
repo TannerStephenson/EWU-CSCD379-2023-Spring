@@ -13,5 +13,16 @@ namespace Wordle.Api.Data
 
         public DbSet<Word> Words => Set<Word>();
         public DbSet<Card> Cards => Set<Card>();
+        public DbSet<DateWord> DateWords => Set<DateWord>();
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+
+            modelBuilder
+                .Entity<DateWord>()
+                .HasIndex(f => f.Date)
+                .IsUnique();
+
+        }
     }
 }
