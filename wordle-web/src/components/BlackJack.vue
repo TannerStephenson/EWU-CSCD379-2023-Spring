@@ -9,7 +9,7 @@
         <v-row class="align-center justify-center mt-5 text-center">
           <v-card height="250px" width="175px" style="margin-right: 20px">
             <transition name="card-flip">
-              <v-img v-if="!flipped" :src="cardBackUrl"></v-img>
+              <v-img v-if="!dealersFlipped" :src="cardBackUrl"></v-img>
             </transition>
           </v-card>
           <v-card height="250px" width="175px">
@@ -25,6 +25,7 @@
         <v-card v-for="(card, index) in playerCards" :key="index" height="250px" width="175px" style="margin-right: 20px">
           <transition name="card-flip">
             <v-img v-if="!flipped" :src="cardBackUrl"></v-img>
+            <v-card-title v-else>{{ card.CardValue }} {{ card.Suit }}</v-card-title>
           </transition>
         </v-card>
         <v-card height="250px" width="175px" style="margin-right: 20px">
@@ -59,16 +60,39 @@ import { ref } from 'vue';
 import Axios from 'axios';
 import { defineProps } from 'vue';
 import type { Card } from '@/scripts/card';
+import { onMounted } from 'vue';
+
+const flipped = ref(false);
+const dealersFlipped = ref(false);
+const cardBackUrl = ref('https://opengameart.org/sites/default/files/card%20back%20black.png');
+const playerCards = ref<Card[]>([]);
+
 
 const props = defineProps<{
   CardValue: number
   Suit: string
 }>()
 
+onMounted(() => {
+  newGame();
+})
 
-const flipped = ref(false);
-const cardBackUrl = ref('https://opengameart.org/sites/default/files/card%20back%20black.png');
-const playerCards = ref<Card[]>([]);
+function newGame() {
+  // Reset the game
+  flipped.value = true;
+  playerCards.value = [];
+  Axios.get('/api/Card')
+    .then((response) => {
+      const newCard = response.data as Card;
+      playerCards.value.push(newCard);
+      console.log(playerCards.value);
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+}
+
+
 
 function flipCards() {
   flipped.value = !flipped.value;
@@ -78,14 +102,13 @@ function hit() {
   // Add a new card to the player's hand
   Axios.get('/api/Card')
     .then((response) => {
-      const newCard = response.data as Card; //as Card?
+      const newCard = response.data as Card;
       playerCards.value.push(newCard);
       console.log(playerCards.value);
     })
     .catch((error) => {
       console.log(error);
     })
-  //playerCards.value.push({});
 }
 
 function stay() {
