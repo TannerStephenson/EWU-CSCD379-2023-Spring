@@ -56,6 +56,12 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import type { Card } from '@/scripts/card';
+
+const props = defineProps<{
+  cardValue: number
+  suit: string
+}>()
 
 const flipped = ref(false);
 const cardBackUrl = ref('https://opengameart.org/sites/default/files/card%20back%20black.png');
@@ -72,7 +78,6 @@ function hit() {
 
 function stay() {
   // Handle the "Stay" button functionality
-  // ... (your logic here)
 }
 </script>
 

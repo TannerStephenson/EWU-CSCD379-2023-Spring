@@ -20,7 +20,6 @@ namespace Wordle.Api.Controllers
             public async Task<CardDto> Get()
             {
                 var randomCard = await _cardService.GetRandomCardAsync();
-                // Map the Card object to a CardDto object
                 var cardDto = new CardDto
                 {
                     Suit = randomCard.Suit,

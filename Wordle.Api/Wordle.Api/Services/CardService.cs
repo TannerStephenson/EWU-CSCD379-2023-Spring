@@ -15,20 +15,11 @@ public class CardService
         _db = db;
     }
 
-    public async Task<Word> GetRandomWordAsync()
-    {
-        var count = await _db.Words.CountAsync(word => word.IsCommon);
-        var index = new Random().Next(count);
-        var word = await _db.Words
-          .Where(word => word.IsCommon)
-          .Skip(index)
-          .FirstAsync();
-        return word;
-    }
-
     public async Task<Card> GetRandomCardAsync()
-    { 
-        var card = await _db.Cards.FirstAsync();
+    {
+        var randomIndex = new Random().Next(1, 52);
+        /*var card = await _db.Cards.FirstAsync();*/
+        var card = await _db.Cards.Skip(randomIndex).FirstAsync();
         return card;
     }
 
