@@ -7,30 +7,28 @@
       </div>
       <div class="d-flex justify-center pa-2 text-h6">
         <v-row class="align-center justify-center mt-5 text-center">
-          <v-card height="250px" width="175px" style="margin-right: 20px">
-            <transition name="card-flip">
-              <v-img v-if="!dealersFlipped" :src="cardBackUrl"></v-img>
-            </transition>
-          </v-card>
-          <v-card height="250px" width="175px">
-            <transition name="card-flip">
-              <v-img v-if="!flipped" :src="cardBackUrl"></v-img>
-            </transition>
-          </v-card>
-        </v-row>
+        <v-card v-for="(card, index) in dealerCards" :key="index" height="250px" width="175px" style="margin-right: 20px; background-color: white;">
+          <transition name="card-flip">
+            <v-img v-if="!flipped" :src="cardBackUrl"></v-img>
+            <v-card-title class="black-font" v-else>
+              {{ card.cardValue }}
+              <v-icon>{{ card.Suit }}</v-icon>
+            </v-card-title>
+          </transition>
+        </v-card>
+      </v-row>
       </div>
   
       <div class="d-flex justify-center pa-2 text-h6">
       <v-row class="align-center justify-center mt-5 text-center">
-        <v-card v-for="(card, index) in playerCards" :key="index" height="250px" width="175px" style="margin-right: 20px">
+        <v-card v-for="(card, index) in playerCards" :key="index" height="250px" width="175px" style="margin-right: 20px; background-color: white;">
           <transition name="card-flip">
             <v-img v-if="!flipped" :src="cardBackUrl"></v-img>
-            <v-card-title v-else>{{ card.CardValue }} {{ card.Suit }}</v-card-title>
-          </transition>
-        </v-card>
-        <v-card height="250px" width="175px" style="margin-right: 20px">
-          <transition name="card-flip">
-            <v-img v-if="!flipped" :src="cardBackUrl"></v-img>
+            <v-card-title class="black-font" v-else>
+              {{ card.cardValue }}
+              <v-icon>{{ card.Suit }}</v-icon>
+            </v-card-title>
+            
           </transition>
         </v-card>
       </v-row>
@@ -66,33 +64,36 @@ const flipped = ref(true);
 const dealersFlipped = ref(false);
 const cardBackUrl = ref('https://opengameart.org/sites/default/files/card%20back%20black.png');
 const playerCards = ref<Card[]>([]);
+const dealerCards = ref<Card[]>([]);
 
 
 const props = defineProps<{
-  CardValue: number
-  Suit: string
+  card: Card
+  //CardValue: number
+  //Suit: string
 }>()
 
 onMounted(() => {
   newGame();
 })
 
-function newGame() {
+async function newGame() {
   // Reset the game
   flipped.value = false;
   playerCards.value = [];
-  Axios.get('/api/Card')
-    .then((response) => {
-      const newCard = response.data as Card;
-      playerCards.value.push(newCard);
-      console.log(playerCards.value);
-    })
-    .catch((error) => {
-      console.log(error);
-    })
-    setTimeout(() => {
-      flipped.value = true;
-}, 1000);
+  dealerCards.value = [];
+  const dealerFirst = await hit();
+  const dealerSecond = await hit();
+
+  dealerCards.value.push(dealerFirst);
+  dealerCards.value.push(dealerSecond);
+ 
+  // Deal the cards
+  const firstCard = await hit();
+  const secondCard = await hit();
+  
+  playerCards.value.push(firstCard);
+  playerCards.value.push(secondCard);
 }
 
 
@@ -101,22 +102,46 @@ function flipCards() {
   flipped.value = !flipped.value;
 }
 
-function hit() {
-  // Add a new card to the player's hand
-  Axios.get('/api/Card')
-    .then((response) => {
-      const newCard = response.data as Card;
-      playerCards.value.push(newCard);
-      console.log(playerCards.value);
-    })
-    .catch((error) => {
-      console.log(error);
-    })
+async function hit() {
+  try {
+    const response = await Axios.get('/api/Card');
+    const newCard = response.data as Card;
+    newCard.Suit = createCardLogo(newCard);
+    console.log(playerCards.value);
+    return newCard;
+  } catch (error) {
+    console.log(error);
+    throw error; // or handle the error appropriately
+  }
 }
 
 function stay() {
   // Handle the "Stay" button functionality
 }
+
+function createCardLogo(card: Card) {
+  // Create the card art for the card
+  let logo = '';
+  switch (card.suit) {
+    case 'SPADE':
+      logo = 'mdi-cards-spade';
+      break;
+    case 'HEART':
+      logo = 'mdi-heart';
+      break;
+    case 'DIAMOND':
+      logo = 'mdi-cards-diamond';
+      break;
+    case 'CLUB':
+      logo = 'mdi-cards-club';
+      break;
+    default:
+      logo = 'mdi-cards';
+      break;
+  }
+  return logo;
+}
+
 </script>
 
 <style scoped>
@@ -125,8 +150,8 @@ function stay() {
   transition: transform 0.5s;
 }
 
-.v-card {
-  margin-left: 3px;
+.black-font {
+  color: black;
 }
 
 .card-flip-enter,
