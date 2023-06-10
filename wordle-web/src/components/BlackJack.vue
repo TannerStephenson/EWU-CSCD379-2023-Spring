@@ -11,8 +11,13 @@
           <transition name="card-flip">
             <v-img v-if="!flipped" :src="cardBackUrl"></v-img>
             <v-card-title class="black-font" v-else>
+              <v-icon v-if="card.Suit === 'HEART' || card.Suit === 'DIAMOND'" class="red-font">{{ card.Suit }}</v-icon>
+              <v-icon v-else>{{ card.Suit }}</v-icon>
               {{ card.cardValue }}
-              <v-icon>{{ card.Suit }}</v-icon>
+              <v-spacer></v-spacer>
+              {{ card.cardValue }}
+              <v-icon v-if="card.Suit === 'HEART' || card.Suit === 'DIAMOND'" class="red-font">{{ card.Suit }}</v-icon>
+              <v-icon v-else>{{ card.Suit }}</v-icon>
             </v-card-title>
           </transition>
         </v-card>
@@ -25,8 +30,13 @@
           <transition name="card-flip">
             <v-img v-if="!flipped" :src="cardBackUrl"></v-img>
             <v-card-title class="black-font" v-else>
+              <v-icon v-if="card.Suit === 'HEART' || card.Suit === 'DIAMOND'" class="red-font">{{ card.Suit }}</v-icon>
+              <v-icon v-else>{{ card.Suit }}</v-icon>
               {{ card.cardValue }}
-              <v-icon>{{ card.Suit }}</v-icon>
+              <v-spacer></v-spacer>
+              {{ card.cardValue }}
+              <v-icon v-if="card.Suit === 'HEART' || card.Suit === 'DIAMOND'" class="red-font">{{ card.Suit }}</v-icon>
+              <v-icon v-else>{{ card.Suit }}</v-icon>
             </v-card-title>
             
           </transition>
@@ -152,6 +162,10 @@ function createCardLogo(card: Card) {
 
 .black-font {
   color: black;
+}
+
+.red-font {
+  color: red;
 }
 
 .card-flip-enter,
