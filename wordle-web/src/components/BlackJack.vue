@@ -6,10 +6,10 @@
         </v-card>
       </div>
       <div class="d-flex justify-center pa-2 text-h6">
-        <v-row class="align-center justify-center mt-5 text-center">
+      <v-row class="align-center justify-center mt-5 text-center">
         <v-card v-for="(card, index) in dealerCards" :key="index" height="250px" width="175px" style="margin-right: 20px; background-color: white;">
           <transition name="card-flip">
-            <v-img v-if="!dealersFlipped" :src="cardBackUrl"></v-img>
+            <v-img v-if="!dealersFlipped && index === 0" :src="cardBackUrl"></v-img>
             <v-card-title class="black-font" v-else>
               <v-icon>{{ card.Suit }}</v-icon>
               {{ card.character }}
@@ -20,6 +20,12 @@
           </transition>
         </v-card>
       </v-row>
+    </div>
+
+      <div class="d-flex justify-center pa-2 text-h6">
+        <v-card height="50px" width="375px" class="align-center justify-center mt-5 text-center">
+          <v-card-title>Dealer stands on 17+</v-card-title>
+        </v-card>
       </div>
   
       <div class="d-flex justify-center pa-2 text-h6">
@@ -40,7 +46,7 @@
     </div>
 
     <v-dialog v-model="dialog">
-      <v-card class="mx-auto" width="200px" height="100px">
+      <v-card class="mx-auto" width="350px" height="150px">
         <v-card-title v-if="win">Win!</v-card-title>
         <v-card-text v-if="win">Congratulations! You have won!</v-card-text>
         <v-card-title v-else>Bust!</v-card-title>
@@ -51,6 +57,7 @@
     <div class="d-flex justify-center pa-2 text-h6">
       <v-card height="175px" width="300px" class="align-center justify-center mt-5 text-center">
         <v-card-title>Player's Card</v-card-title>
+        <v-card-title>Player's Hand Total: {{ playerHandTotal }}</v-card-title>
         <v-btn @click="stay">
           <v-icon>mdi-hand-back-left</v-icon>
           <v-card-text> Stay </v-card-text>
@@ -76,7 +83,7 @@ import { onMounted } from 'vue';
 import type { Ref } from 'vue';
 
 const flipped = ref(true);
-const dealersFlipped = ref(true);
+const dealersFlipped = ref(false);
 const cardBackUrl = ref('https://opengameart.org/sites/default/files/card%20back%20black.png');
 const playerCards = ref<Card[]>([]);
 const dealerCards = ref<Card[]>([]);
@@ -126,6 +133,7 @@ async function hit() {
     newCard.Suit = createCardLogo(newCard);
     console.log(playerCards.value);
     playerCards.value = [...playerCards.value, newCard];
+    await new Promise((resolve) => setTimeout(resolve, 500));
     return newCard;
   } catch (error) {
     console.log(error);
@@ -139,6 +147,7 @@ async function dealersHit() {
     const newCard = response.data as Card;
     newCard.Suit = createCardLogo(newCard);
     dealerCards.value.push(newCard);
+    await new Promise((resolve) => setTimeout(resolve, 370));
     return newCard;
   } catch (error) {
     console.log(error);
@@ -146,12 +155,15 @@ async function dealersHit() {
   }
 }
 
-function stay() {
+async function stay() {
   // Handle the "Stay" button functionality
+  dealersFlipped.value = true;
+  await new Promise((resolve) => setTimeout(resolve, 1275));
   dealerHandTotal.value = calculateHandTotal(dealerCards.value);
   while (dealerHandTotal.value < 17) {
-    dealersHit();
+    await dealersHit();
     dealerHandTotal.value = calculateHandTotal(dealerCards.value);
+    await new Promise((resolve) => setTimeout(resolve, 500));
   }
   if (dealerHandTotal.value > 21) {
     // Dealer has gone bust
@@ -195,6 +207,7 @@ function stay() {
       }, 1750);
     }
   }
+  dealersFlipped.value = false;
 }
 
 
