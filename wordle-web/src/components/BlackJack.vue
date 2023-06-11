@@ -33,10 +33,19 @@
         <v-card v-for="(card, index) in playerCards" :key="index" height="250px" width="175px" style="margin-right: 20px; background-color: white;">
           <transition name="card-flip">
             <v-img v-if="!flipped" :src="cardBackUrl"></v-img>
-            <v-card-title class="black-font" v-else>
+            <v-card-title class="black-font" style="text-align: left;" v-else>
               <v-icon>{{ card.Suit }}</v-icon>
               {{ card.character }}
-              <v-spacer></v-spacer>
+              <v-spacer>
+                <v-card height="175px" color="black" variant="outlined">
+                  
+                  <v-card-title style="font-size: small;">Grant's Casino</v-card-title>
+                  <v-img :src="GrantUrl"></v-img>
+                  
+                  <v-spacer></v-spacer>
+                  
+                </v-card>
+              </v-spacer>
               {{ card.character }}
               <v-icon>{{ card.Suit }}</v-icon>
             </v-card-title>
@@ -81,10 +90,12 @@ import { defineProps } from 'vue';
 import type { Card } from '@/scripts/card';
 import { onMounted } from 'vue';
 import type { Ref } from 'vue';
+import GrantsHead from '../assets/GrantsHead.png';
 
 const flipped = ref(true);
 const dealersFlipped = ref(false);
 const cardBackUrl = ref('https://opengameart.org/sites/default/files/card%20back%20black.png');
+const GrantUrl = ref(GrantsHead);
 const playerCards = ref<Card[]>([]);
 const dealerCards = ref<Card[]>([]);
 const playerHandTotal = ref(0);
