@@ -18,7 +18,8 @@
                     var card = new Card()
                     {
                         CardValue = int.Parse(parts[0]),
-                        Suit = parts[1]
+                        Suit = parts[1],
+                        Character = parts[2]
                     };
                     db.Cards.Add(card);
                 }

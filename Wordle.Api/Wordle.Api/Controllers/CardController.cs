@@ -23,7 +23,8 @@ namespace Wordle.Api.Controllers
                 var cardDto = new CardDto
                 {
                     Suit = randomCard.Suit,
-                    CardValue = randomCard.CardValue
+                    CardValue = randomCard.CardValue,
+                    Character = randomCard.Character
                 };
                 return cardDto;
             }

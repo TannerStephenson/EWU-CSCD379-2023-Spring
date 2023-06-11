@@ -17,7 +17,8 @@ namespace Wordle.Api.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Suit = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CardValue = table.Column<int>(type: "int", nullable: false)
+                    CardValue = table.Column<int>(type: "int", nullable: false),
+                    Character = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {

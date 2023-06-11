@@ -12,9 +12,9 @@
             <v-img v-if="!dealersFlipped" :src="cardBackUrl"></v-img>
             <v-card-title class="black-font" v-else>
               <v-icon>{{ card.Suit }}</v-icon>
-              {{ card.cardValue }}
+              {{ card.character }}
               <v-spacer></v-spacer>
-              {{ card.cardValue }}
+              {{ card.character }}
               <v-icon>{{ card.Suit }}</v-icon>
             </v-card-title>
           </transition>
@@ -29,15 +29,24 @@
             <v-img v-if="!flipped" :src="cardBackUrl"></v-img>
             <v-card-title class="black-font" v-else>
               <v-icon>{{ card.Suit }}</v-icon>
-              {{ card.cardValue }}
+              {{ card.character }}
               <v-spacer></v-spacer>
-              {{ card.cardValue }}
+              {{ card.character }}
               <v-icon>{{ card.Suit }}</v-icon>
             </v-card-title>
           </transition>
         </v-card>
       </v-row>
     </div>
+
+    <v-dialog v-model="dialog">
+      <v-card class="mx-auto" width="200px" height="100px">
+        <v-card-title v-if="win">Win!</v-card-title>
+        <v-card-text v-if="win">Congratulations! You have won!</v-card-text>
+        <v-card-title v-else>Bust!</v-card-title>
+        <v-card-text v-else>You have lost!</v-card-text>
+      </v-card>
+    </v-dialog>
 
     <div class="d-flex justify-center pa-2 text-h6">
       <v-card height="175px" width="300px" class="align-center justify-center mt-5 text-center">
@@ -67,11 +76,14 @@ import { onMounted } from 'vue';
 import type { Ref } from 'vue';
 
 const flipped = ref(true);
-const dealersFlipped = ref(false);
+const dealersFlipped = ref(true);
 const cardBackUrl = ref('https://opengameart.org/sites/default/files/card%20back%20black.png');
 const playerCards = ref<Card[]>([]);
 const dealerCards = ref<Card[]>([]);
 const playerHandTotal = ref(0);
+const dealerHandTotal = ref(0);
+const dialog = ref(false);
+const win = ref(false);
 
 
 
@@ -98,6 +110,7 @@ async function newGame() {
   await hit();
   await new Promise(r => setTimeout(r, 200));
   flipped.value = true;
+  win.value = false;
 }
 
 
@@ -135,6 +148,53 @@ async function dealersHit() {
 
 function stay() {
   // Handle the "Stay" button functionality
+  dealerHandTotal.value = calculateHandTotal(dealerCards.value);
+  while (dealerHandTotal.value < 17) {
+    dealersHit();
+    dealerHandTotal.value = calculateHandTotal(dealerCards.value);
+  }
+  if (dealerHandTotal.value > 21) {
+    // Dealer has gone bust
+    console.log("Dealer has gone bust!");
+    win.value = true;
+    dialog.value = true;
+    //Wait a few seconds
+    setTimeout(() => {
+      dialog.value = false;
+      newGame();
+    }, 1750);
+  } else {
+    // Compare hands
+    if (dealerHandTotal.value > playerHandTotal.value) {
+      // Dealer wins
+      console.log("Dealer wins!");
+      dialog.value = true;
+      //Wait a few seconds
+      setTimeout(() => {
+        dialog.value = false;
+        newGame();
+      }, 1750);
+    } else if (dealerHandTotal.value < playerHandTotal.value) {
+      // Player wins
+      console.log("Player wins!");
+      dialog.value = true;
+      win.value = true;
+      //Wait a few seconds
+      setTimeout(() => {
+        dialog.value = false;
+        newGame();
+      }, 1750);
+    } else {
+      // Tie
+      console.log("Tie!");
+      dialog.value = true;
+      //Wait a few seconds
+      setTimeout(() => {
+        dialog.value = false;
+        newGame();
+      }, 1750);
+    }
+  }
 }
 
 
@@ -143,6 +203,13 @@ watch(playerCards, (newCards) => {
   if (playerHandTotal.value > 21) {
     // Player has gone bust
     console.log("Player has gone bust!");
+    dialog.value = true;
+    //Wait a few seconds
+    setTimeout(() => {
+      dialog.value = false;
+      newGame();
+    }, 1750);
+    
   }
 });
 
