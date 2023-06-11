@@ -10,13 +10,22 @@
         <v-card v-for="(card, index) in dealerCards" :key="index" height="250px" width="175px" style="margin-right: 20px; background-color: white;">
           <transition name="card-flip">
             <v-img v-if="!dealersFlipped && index === 0" :src="cardBackUrl"></v-img>
-            <v-card-title class="black-font" v-else>
-              <v-icon>{{ card.Suit }}</v-icon>
-              {{ card.character }}
-              <v-spacer></v-spacer>
-              {{ card.character }}
-              <v-icon>{{ card.Suit }}</v-icon>
-            </v-card-title>
+            <div v-else>
+              <v-card-title class="black-font" style="text-align: left">
+                <v-icon>{{ card.Suit }}</v-icon>
+                {{ card.character }}
+              </v-card-title>
+                <v-spacer>
+                  <v-card class="mx-auto" height="160px" width="150px" color="black" variant="outlined">
+                    <v-card-title style="font-size: small;">Grant's Casino</v-card-title>
+                    <v-img :src="GrantUrl"></v-img>
+                  </v-card>
+                </v-spacer>
+                <v-card-title class="black-font" style="text-align: right">
+                {{ card.character }}
+                <v-icon>{{ card.Suit }}</v-icon>
+              </v-card-title>
+            </div>
           </transition>
         </v-card>
       </v-row>
@@ -33,22 +42,22 @@
         <v-card v-for="(card, index) in playerCards" :key="index" height="250px" width="175px" style="margin-right: 20px; background-color: white;">
           <transition name="card-flip">
             <v-img v-if="!flipped" :src="cardBackUrl"></v-img>
-            <v-card-title class="black-font" style="text-align: left;" v-else>
-              <v-icon>{{ card.Suit }}</v-icon>
-              {{ card.character }}
-              <v-spacer>
-                <v-card height="175px" color="black" variant="outlined">
-                  
-                  <v-card-title style="font-size: small;">Grant's Casino</v-card-title>
-                  <v-img :src="GrantUrl"></v-img>
-                  
-                  <v-spacer></v-spacer>
-                  
-                </v-card>
-              </v-spacer>
-              {{ card.character }}
-              <v-icon>{{ card.Suit }}</v-icon>
-            </v-card-title>
+            <div v-else>
+              <v-card-title class="black-font" style="text-align: left">
+                <v-icon>{{ card.Suit }}</v-icon>
+                {{ card.character }}
+              </v-card-title>
+                <v-spacer>
+                  <v-card class="mx-auto" height="160px" width="150px" color="black" variant="outlined">
+                    <v-card-title style="font-size: small;">GRANT'S CASINO</v-card-title>
+                    <v-img :src="GrantUrl"></v-img>
+                  </v-card>
+                </v-spacer>
+                <v-card-title class="black-font" style="text-align: right">
+                {{ card.character }}
+                <v-icon>{{ card.Suit }}</v-icon>
+              </v-card-title>
+            </div>
           </transition>
         </v-card>
       </v-row>
@@ -91,11 +100,13 @@ import type { Card } from '@/scripts/card';
 import { onMounted } from 'vue';
 import type { Ref } from 'vue';
 import GrantsHead from '../assets/GrantsHead.png';
+import GrantsIcon from '../assets/GrantsIcon.svg';
 
 const flipped = ref(true);
 const dealersFlipped = ref(false);
 const cardBackUrl = ref('https://opengameart.org/sites/default/files/card%20back%20black.png');
 const GrantUrl = ref(GrantsHead);
+const GrantIcon = ref(GrantsIcon);
 const playerCards = ref<Card[]>([]);
 const dealerCards = ref<Card[]>([]);
 const playerHandTotal = ref(0);
