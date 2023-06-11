@@ -9,15 +9,13 @@
         <v-row class="align-center justify-center mt-5 text-center">
         <v-card v-for="(card, index) in dealerCards" :key="index" height="250px" width="175px" style="margin-right: 20px; background-color: white;">
           <transition name="card-flip">
-            <v-img v-if="!flipped" :src="cardBackUrl"></v-img>
+            <v-img v-if="!dealersFlipped" :src="cardBackUrl"></v-img>
             <v-card-title class="black-font" v-else>
-              <v-icon v-if="card.Suit === 'HEART' || card.Suit === 'DIAMOND'" class="red-font">{{ card.Suit }}</v-icon>
-              <v-icon v-else>{{ card.Suit }}</v-icon>
+              <v-icon>{{ card.Suit }}</v-icon>
               {{ card.cardValue }}
               <v-spacer></v-spacer>
               {{ card.cardValue }}
-              <v-icon v-if="card.Suit === 'HEART' || card.Suit === 'DIAMOND'" class="red-font">{{ card.Suit }}</v-icon>
-              <v-icon v-else>{{ card.Suit }}</v-icon>
+              <v-icon>{{ card.Suit }}</v-icon>
             </v-card-title>
           </transition>
         </v-card>
@@ -30,15 +28,12 @@
           <transition name="card-flip">
             <v-img v-if="!flipped" :src="cardBackUrl"></v-img>
             <v-card-title class="black-font" v-else>
-              <v-icon v-if="card.Suit === 'HEART' || card.Suit === 'DIAMOND'" class="red-font">{{ card.Suit }}</v-icon>
-              <v-icon v-else>{{ card.Suit }}</v-icon>
+              <v-icon>{{ card.Suit }}</v-icon>
               {{ card.cardValue }}
               <v-spacer></v-spacer>
               {{ card.cardValue }}
-              <v-icon v-if="card.Suit === 'HEART' || card.Suit === 'DIAMOND'" class="red-font">{{ card.Suit }}</v-icon>
-              <v-icon v-else>{{ card.Suit }}</v-icon>
+              <v-icon>{{ card.Suit }}</v-icon>
             </v-card-title>
-            
           </transition>
         </v-card>
       </v-row>
@@ -64,17 +59,20 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import Axios from 'axios';
 import { defineProps } from 'vue';
 import type { Card } from '@/scripts/card';
 import { onMounted } from 'vue';
+import type { Ref } from 'vue';
 
 const flipped = ref(true);
 const dealersFlipped = ref(false);
 const cardBackUrl = ref('https://opengameart.org/sites/default/files/card%20back%20black.png');
 const playerCards = ref<Card[]>([]);
 const dealerCards = ref<Card[]>([]);
+const playerHandTotal = ref(0);
+
 
 
 const props = defineProps<{
@@ -92,18 +90,14 @@ async function newGame() {
   flipped.value = false;
   playerCards.value = [];
   dealerCards.value = [];
-  const dealerFirst = await hit();
-  const dealerSecond = await hit();
-
-  dealerCards.value.push(dealerFirst);
-  dealerCards.value.push(dealerSecond);
+  await dealersHit();
+  await dealersHit();
  
   // Deal the cards
-  const firstCard = await hit();
-  const secondCard = await hit();
-  
-  playerCards.value.push(firstCard);
-  playerCards.value.push(secondCard);
+  await hit();
+  await hit();
+  await new Promise(r => setTimeout(r, 200));
+  flipped.value = true;
 }
 
 
@@ -118,15 +112,57 @@ async function hit() {
     const newCard = response.data as Card;
     newCard.Suit = createCardLogo(newCard);
     console.log(playerCards.value);
+    playerCards.value = [...playerCards.value, newCard];
     return newCard;
   } catch (error) {
     console.log(error);
-    throw error; // or handle the error appropriately
+    throw error;
+  }
+}
+
+async function dealersHit() {
+  try {
+    const response = await Axios.get('/api/Card');
+    const newCard = response.data as Card;
+    newCard.Suit = createCardLogo(newCard);
+    dealerCards.value.push(newCard);
+    return newCard;
+  } catch (error) {
+    console.log(error);
+    throw error;
   }
 }
 
 function stay() {
   // Handle the "Stay" button functionality
+}
+
+
+watch(playerCards, (newCards) => {
+  playerHandTotal.value = calculateHandTotal(newCards);
+  if (playerHandTotal.value > 21) {
+    // Player has gone bust
+    console.log("Player has gone bust!");
+  }
+});
+
+function calculateHandTotal(cards: Card[]): number {
+  let total = 0;
+  let hasAce = false;
+  for (const card of cards) {
+    if (card.cardValue === 11) {
+      total += 11; // Assume 11 for now, we'll adjust later if needed
+      hasAce = true;
+    }
+     else {
+      total += card.cardValue;
+    }
+  }
+  if (hasAce && total > 21) {
+    // Adjust ace value from 11 to 1
+    total -= 10;
+  }
+  return total;
 }
 
 function createCardLogo(card: Card) {
@@ -151,7 +187,6 @@ function createCardLogo(card: Card) {
   }
   return logo;
 }
-
 </script>
 
 <style scoped>

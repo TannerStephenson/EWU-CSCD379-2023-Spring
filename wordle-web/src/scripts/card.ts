@@ -1,4 +1,5 @@
 export class Card {
-    CardValue: number = 0
+    cardValue: number = 0
     Suit: string = ''
+suit: any
 }
