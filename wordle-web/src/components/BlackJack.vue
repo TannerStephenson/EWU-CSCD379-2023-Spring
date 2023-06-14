@@ -84,6 +84,13 @@
           <v-icon>mdi-cards</v-icon>
           <v-card-text> Hit </v-card-text>
         </v-btn>
+        <v-slider
+          v-model="value"
+          :min="10"
+          :max="100"
+          :step="10"
+          thumb-label
+        ></v-slider>
         <v-btn @click="flipCards">
           <v-card-text> Flip Cards Test </v-card-text>
         </v-btn>
@@ -98,21 +105,19 @@ import Axios from 'axios';
 import { defineProps } from 'vue';
 import type { Card } from '@/scripts/card';
 import { onMounted } from 'vue';
-import type { Ref } from 'vue';
 import GrantsHead from '../assets/GrantsHead.png';
-import GrantsIcon from '../assets/GrantsIcon.svg';
 
 const flipped = ref(true);
 const dealersFlipped = ref(false);
 const cardBackUrl = ref('https://opengameart.org/sites/default/files/card%20back%20black.png');
 const GrantUrl = ref(GrantsHead);
-const GrantIcon = ref(GrantsIcon);
 const playerCards = ref<Card[]>([]);
 const dealerCards = ref<Card[]>([]);
 const playerHandTotal = ref(0);
 const dealerHandTotal = ref(0);
 const dialog = ref(false);
 const win = ref(false);
+const playersChips = ref(0);
 
 
 
@@ -124,6 +129,7 @@ const props = defineProps<{
 
 onMounted(() => {
   newGame();
+  
 })
 
 async function newGame() {

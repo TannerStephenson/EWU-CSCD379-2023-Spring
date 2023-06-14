@@ -35,7 +35,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(connectionString);
 });
 //builder.Services.AddScoped<WordService>();
-//builder.Services.AddScoped<PlayerService>();
+builder.Services.AddScoped<PlayerService>();
 builder.Services.AddScoped<CardService>();
 
 // Actually build the app so we can configure the pipeline next
