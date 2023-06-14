@@ -44,9 +44,9 @@ namespace Wordle.Api.Migrations
                     b.ToTable("Cards");
                 });
 
-            modelBuilder.Entity("Wordle.Api.Data.Player", b =>
+            modelBuilder.Entity("Wordle.Api.Data.Chip", b =>
                 {
-                    b.Property<Guid>("PlayerId")
+                    b.Property<Guid>("ChipId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -56,9 +56,9 @@ namespace Wordle.Api.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("PlayerId");
+                    b.HasKey("ChipId");
 
-                    b.ToTable("Players");
+                    b.ToTable("Chips");
                 });
 #pragma warning restore 612, 618
         }

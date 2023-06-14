@@ -1,8 +1,8 @@
 ﻿namespace Wordle.Api.Dtos
 {
-    public class PlayerDto
+    public class ChipDto
     {
-        public PlayerDto(int chipCount)
+        public ChipDto(int chipCount)
         {
             ChipCount = chipCount;
         }

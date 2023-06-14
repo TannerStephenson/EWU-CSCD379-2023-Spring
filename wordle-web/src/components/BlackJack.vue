@@ -73,7 +73,7 @@
     </v-dialog>
 
     <div class="d-flex justify-center pa-2 text-h6">
-      <v-card height="175px" width="300px" class="align-center justify-center mt-5 text-center">
+      <v-card height="225px" width="325px" class="align-center justify-center mt-5 text-center">
         <v-card-title>Player's Card</v-card-title>
         <v-card-title>Player's Hand Total: {{ playerHandTotal }}</v-card-title>
         <v-btn @click="stay">
@@ -84,12 +84,17 @@
           <v-icon>mdi-cards</v-icon>
           <v-card-text> Hit </v-card-text>
         </v-btn>
+        <v-spacer></v-spacer>
+        <v-text>Chips: {{ playersChips }}</v-text>
+        <v-spacer></v-spacer>
+        <v-text>Bet amount: {{ betAmount }}</v-text>
         <v-slider
-          v-model="value"
+          v-model="betAmount"
           :min="10"
           :max="100"
           :step="10"
           thumb-label
+          style="width: 200px; margin: 0 auto;"
         ></v-slider>
         <v-btn @click="flipCards">
           <v-card-text> Flip Cards Test </v-card-text>
@@ -105,7 +110,9 @@ import Axios from 'axios';
 import { defineProps } from 'vue';
 import type { Card } from '@/scripts/card';
 import { onMounted } from 'vue';
+import type { Chip } from '@/scripts/chip';
 import GrantsHead from '../assets/GrantsHead.png';
+import axios from 'axios';
 
 const flipped = ref(true);
 const dealersFlipped = ref(false);
@@ -117,7 +124,8 @@ const playerHandTotal = ref(0);
 const dealerHandTotal = ref(0);
 const dialog = ref(false);
 const win = ref(false);
-const playersChips = ref(0);
+const playersChips = ref(1000);
+const betAmount = ref(10);
 
 
 
@@ -129,7 +137,7 @@ const props = defineProps<{
 
 onMounted(() => {
   newGame();
-  
+  setChips(1000);
 })
 
 async function newGame() {
@@ -146,6 +154,15 @@ async function newGame() {
   await new Promise(r => setTimeout(r, 200));
   flipped.value = true;
   win.value = false;
+}
+
+async function getChips() {
+  const response = await axios.get('/api/Chip');
+  playersChips.value = response.data as number
+}
+
+async function setChips(number: number) {
+  axios.post('/api/Chip', number);
 }
 
 
