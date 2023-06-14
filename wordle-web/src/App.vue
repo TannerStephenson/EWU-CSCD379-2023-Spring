@@ -8,6 +8,7 @@
             <v-icon icon="mdi-cards" color="orange-darken-3"></v-icon>
             BlackJack
           </RouterLink>
+          <v-btn color="primary" href="https://www.ncpgambling.org/programs-resources/programs/">Help</v-btn>
         </v-app-bar-title>
         <v-spacer></v-spacer>
 
