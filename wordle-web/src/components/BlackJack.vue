@@ -18,7 +18,7 @@
                 <v-spacer>
                   <v-card class="mx-auto" height="160px" width="150px" color="black" variant="outlined">
                     <v-card-title style="font-size: small;">Grant's Casino</v-card-title>
-                    <v-img :src="GrantUrl"></v-img>
+                    <v-img :src="AltGrantUrl" class="dancing-grants"></v-img>
                   </v-card>
                 </v-spacer>
                 <v-card-title class="black-font" style="text-align: right">
@@ -50,7 +50,7 @@
                 <v-spacer>
                   <v-card class="mx-auto" height="160px" width="150px" color="black" variant="outlined">
                     <v-card-title style="font-size: small;">GRANT'S CASINO</v-card-title>
-                    <v-img :src="GrantUrl"></v-img>
+                    <v-img :src="GrantUrl" class="dancing-grants"></v-img>
                   </v-card>
                 </v-spacer>
                 <v-card-title class="black-font" style="text-align: right">
@@ -112,12 +112,14 @@ import type { Card } from '@/scripts/card';
 import { onMounted } from 'vue';
 import type { Chip } from '@/scripts/chip';
 import GrantsHead from '../assets/GrantsHead.png';
+import AltGrantsHead from '../assets/AltGrantsHead.png';
 import axios from 'axios';
 
 const flipped = ref(true);
 const dealersFlipped = ref(false);
 const cardBackUrl = ref('https://opengameart.org/sites/default/files/card%20back%20black.png');
 const GrantUrl = ref(GrantsHead);
+const AltGrantUrl = ref(AltGrantsHead);
 const playerCards = ref<Card[]>([]);
 const dealerCards = ref<Card[]>([]);
 const playerHandTotal = ref(0);
@@ -376,12 +378,24 @@ function createCardLogo(card: Card) {
   color: black;
 }
 
-.red-font {
-  color: red;
-}
-
 .card-flip-enter,
 .card-flip-leave-to {
   transform: rotateY(180deg);
+}
+
+.dancing-grants {
+  animation: dance 5s infinite;
+}
+
+@keyframes dance {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(180deg);
+  }
+  100% {
+    transform: translateY(0px) rotate(360deg);
+  }
 }
 </style>
