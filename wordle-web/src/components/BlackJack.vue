@@ -132,8 +132,6 @@ const chip = ref(0);
 const props = defineProps<{
   card: Card
   chip: Chip
-  //CardValue: number
-  //Suit: string
 }>()
 
 onMounted(() => {
@@ -143,15 +141,12 @@ onMounted(() => {
 })
 
 async function newGame() {
-  // Reset the game
-  
   flipped.value = false;
   playerCards.value = [];
   dealerCards.value = [];
   await dealersHit();
   await dealersHit();
  
-  // Deal the cards
   await hit();
   await hit();
   await new Promise(r => setTimeout(r, 200));
@@ -211,7 +206,6 @@ async function dealersHit() {
 }
 
 async function stay() {
-  // Handle the "Stay" button functionality
   dealersFlipped.value = true;
   await new Promise((resolve) => setTimeout(resolve, 1275));
   dealerHandTotal.value = calculateHandTotal(dealerCards.value);
@@ -225,7 +219,6 @@ async function stay() {
     console.log("Dealer has gone bust!");
     win.value = true;
     dialog.value = true;
-    // Wait a few seconds
     setTimeout(() => {
       dialog.value = false;
       winGame();
@@ -236,7 +229,6 @@ async function stay() {
       // Dealer wins
       console.log("Dealer wins!");
       dialog.value = true;
-      // Wait a few seconds
       setTimeout(() => {
         dialog.value = false;
         lose();
@@ -246,15 +238,13 @@ async function stay() {
       console.log("Player wins!");
       dialog.value = true;
       win.value = true;
-      // Wait a few seconds
       setTimeout(() => {
         dialog.value = false;
         winGame();
       }, 1750);
     } else {
       // Tie
-      console.log("Tie!");
-      // Wait a few seconds
+      console.log("Push!");
       setTimeout(() => {
         dialog.value = false;
         tieGame();
@@ -269,7 +259,7 @@ function winGame() {
   increasePlayerChips(winnings)
     .then(() => {
       console.log("Player's chips increased by", winnings);
-      betAmount.value = 10;  // Reset the bet amount to the default value
+      betAmount.value = 10;
       newGame();
     })
     .catch((error) => {
@@ -282,7 +272,7 @@ function lose() {
   decreasePlayerChips(losses)
     .then(() => {
       console.log("Player's chips decreased by", losses);
-      betAmount.value = 10;  // Reset the bet amount to the default value
+      betAmount.value = 10;
       newGame();
     })
     .catch((error) => {
@@ -291,7 +281,7 @@ function lose() {
 }
 
 function tieGame() {
-  betAmount.value = 10;  // Reset the bet amount to the default value
+  betAmount.value = 10;
   newGame();
 }
 
@@ -324,7 +314,7 @@ watch(playerCards, (newCards) => {
     // Player has gone bust
     console.log("Player has gone bust!");
     dialog.value = true;
-    //Wait a few seconds
+    lose();
     setTimeout(() => {
       dialog.value = false;
       newGame();
