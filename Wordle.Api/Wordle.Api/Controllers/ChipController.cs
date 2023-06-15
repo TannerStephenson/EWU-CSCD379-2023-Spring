@@ -17,11 +17,18 @@ namespace Wordle.Api.Controllers
                 _ChipService = ChipService;
             }
 
+        [HttpPost("start")]
+        public async Task<IActionResult> Start()
+        {
+            var chip = await _ChipService.CreateChipAsync();
+            return Ok(chip);
+        }
+
         [HttpGet]
         public async Task<ChipDto> Get()
         {
-            var Chip = new Chip();
-            int chipCount = await _ChipService.GetChipCountAsync(Chip);
+            var chip = new Chip();
+            int chipCount = await _ChipService.GetChipCountAsync(chip);
             var dto = new ChipDto(chipCount);
             return dto;
         }

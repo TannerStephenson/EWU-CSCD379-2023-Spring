@@ -85,7 +85,7 @@
           <v-card-text> Hit </v-card-text>
         </v-btn>
         <v-spacer></v-spacer>
-        <v-text>Chips: {{ playersChips }}</v-text>
+        <v-text>Chips: {{ chip }}</v-text>
         <v-spacer></v-spacer>
         <v-text>Bet amount: {{ betAmount }}</v-text>
         <v-slider
@@ -124,24 +124,27 @@ const playerHandTotal = ref(0);
 const dealerHandTotal = ref(0);
 const dialog = ref(false);
 const win = ref(false);
-const playersChips = ref(1000);
 const betAmount = ref(10);
+const chip = ref(0);
 
 
 
 const props = defineProps<{
   card: Card
+  chip: Chip
   //CardValue: number
   //Suit: string
 }>()
 
 onMounted(() => {
+  getChips();
+  updateChipCount();
   newGame();
-  setChips(1000);
 })
 
 async function newGame() {
   // Reset the game
+  
   flipped.value = false;
   playerCards.value = [];
   dealerCards.value = [];
@@ -157,12 +160,19 @@ async function newGame() {
 }
 
 async function getChips() {
-  const response = await axios.get('/api/Chip');
-  playersChips.value = response.data as number
+  const response = await Axios.get('/api/Chip');
+  const data = response.data;
+  chip.value = data.chipCount;
+  console.log(chip.value)
 }
 
-async function setChips(number: number) {
-  axios.post('/api/Chip', number);
+async function updateChipCount() {
+  try {
+    await Axios.post('/api/Chip', {chipCount: chip.value});
+    console.log('Chip count updated successfully', chip.value);
+  } catch (error) {
+    console.error('Failed to update chip count:', error);
+  }
 }
 
 
@@ -215,10 +225,10 @@ async function stay() {
     console.log("Dealer has gone bust!");
     win.value = true;
     dialog.value = true;
-    //Wait a few seconds
+    // Wait a few seconds
     setTimeout(() => {
       dialog.value = false;
-      newGame();
+      winGame();
     }, 1750);
   } else {
     // Compare hands
@@ -226,33 +236,85 @@ async function stay() {
       // Dealer wins
       console.log("Dealer wins!");
       dialog.value = true;
-      //Wait a few seconds
+      // Wait a few seconds
       setTimeout(() => {
         dialog.value = false;
-        newGame();
+        lose();
       }, 1750);
     } else if (dealerHandTotal.value < playerHandTotal.value) {
       // Player wins
       console.log("Player wins!");
       dialog.value = true;
       win.value = true;
-      //Wait a few seconds
+      // Wait a few seconds
       setTimeout(() => {
         dialog.value = false;
-        newGame();
+        winGame();
       }, 1750);
     } else {
       // Tie
       console.log("Tie!");
-      dialog.value = true;
-      //Wait a few seconds
+      // Wait a few seconds
       setTimeout(() => {
         dialog.value = false;
-        newGame();
+        tieGame();
       }, 1750);
     }
   }
   dealersFlipped.value = false;
+}
+
+function winGame() {
+  const winnings = betAmount.value;
+  increasePlayerChips(winnings)
+    .then(() => {
+      console.log("Player's chips increased by", winnings);
+      betAmount.value = 10;  // Reset the bet amount to the default value
+      newGame();
+    })
+    .catch((error) => {
+      console.error("Error increasing player's chips:", error);
+    });
+}
+
+function lose() {
+  const losses = betAmount.value;
+  decreasePlayerChips(losses)
+    .then(() => {
+      console.log("Player's chips decreased by", losses);
+      betAmount.value = 10;  // Reset the bet amount to the default value
+      newGame();
+    })
+    .catch((error) => {
+      console.error("Error decreasing player's chips:", error);
+    });
+}
+
+function tieGame() {
+  betAmount.value = 10;  // Reset the bet amount to the default value
+  newGame();
+}
+
+async function increasePlayerChips(amount: number) {
+  try {
+    const newChips = chip.value + amount;
+    chip.value = newChips;
+    await updateChipCount();
+    console.log("Player's chips increased by", amount);
+  } catch (error) {
+    console.error("Failed to increase player's chips:", error);
+  }
+}
+
+async function decreasePlayerChips(amount: number) {
+  try {
+    const newChips = chip.value - amount;
+    chip.value = newChips;
+    await updateChipCount();
+    console.log("Player's chips decreased by", amount);
+  } catch (error) {
+    console.error("Failed to decrease player's chips:", error);
+  }
 }
 
 

@@ -5,6 +5,7 @@
         public static void Seed(AppDbContext context)
         {
             SeedCards(context);
+            SeedChips(context);
         }
 
         public static void SeedCards(AppDbContext db)
@@ -25,6 +26,22 @@
                 }
                 db.SaveChanges();
             }
+        }
+
+        public static void SeedChips(AppDbContext db)
+        {
+            if (!db.Chips.Any())
+            {
+                var newPlayer = new Chip()
+                {
+                    Name = "Player 1",
+                    ChipCount = 1000,
+                    ChipId = Guid.NewGuid()
+                };
+                db.Chips.Add(newPlayer);
+            }
+            db.SaveChanges();
+            
         }
         
 

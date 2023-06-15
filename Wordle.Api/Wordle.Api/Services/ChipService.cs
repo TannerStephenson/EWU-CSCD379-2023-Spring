@@ -16,24 +16,30 @@ public class ChipService
         _db = db;
     }
 
-    public async Task CreateChipAsync(string ChipName)
+    public async Task<Chip> CreateChipAsync()
     {
-        // Create the Chip object
         var newChip = new Chip
         {
-            Name = ChipName,
             ChipCount = DefaultChipCount // Set the default chip count
         };
 
-        // Save the new Chip to the database
         await _db.Chips.AddAsync(newChip);
         await _db.SaveChangesAsync();
+
+        return newChip;
     }
 
-    public async Task<int> GetChipCountAsync(Chip Chip)
+    public async Task<int> GetChipCountAsync(Chip chip)
     {
-        var result = await _db.Chips.FirstOrDefaultAsync(p => p == Chip);
-        return result?.ChipCount ?? 0;
+        var result = await _db.Chips.FirstOrDefaultAsync(p => p.ChipId == chip.ChipId);
+        if (result != null)
+        {
+            return result.ChipCount;
+        }
+        else
+        {
+            return 1000;
+        }
     }
 
     public async Task SetChipCountAsync(Chip Chip, int newChipCount)
