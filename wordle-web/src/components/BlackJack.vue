@@ -113,7 +113,6 @@ import { onMounted } from 'vue';
 import type { Chip } from '@/scripts/chip';
 import GrantsHead from '../assets/GrantsHead.png';
 import AltGrantsHead from '../assets/AltGrantsHead.png';
-import axios from 'axios';
 
 const flipped = ref(true);
 const dealersFlipped = ref(false);
@@ -261,7 +260,6 @@ function winGame() {
   increasePlayerChips(winnings)
     .then(() => {
       console.log("Player's chips increased by", winnings);
-      betAmount.value = 10;
       newGame();
     })
     .catch((error) => {
@@ -274,7 +272,6 @@ function lose() {
   decreasePlayerChips(losses)
     .then(() => {
       console.log("Player's chips decreased by", losses);
-      betAmount.value = 10;
       newGame();
     })
     .catch((error) => {
@@ -283,7 +280,6 @@ function lose() {
 }
 
 function tieGame() {
-  betAmount.value = 10;
   newGame();
 }
 
